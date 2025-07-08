@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-xl mx-auto bg-white p-8 rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Hello {{ current_user.username }} 👋</h1>
+    
+    <form method="POST" class="flex gap-4 mb-6">
+        {{ form.hidden_tag() }}
+        {{ form.content(class_="flex-grow px-3 py-2 border rounded") }}
+        {{ form.submit(class_="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600") }}
+    </form>
+
+    <ul class="space-y-4">
+        {% for task in tasks %}
+        <li class="flex items-center justify-between p-3 border rounded {% if task.completed %}bg-green-100{% endif %}">
+            <div>
+                <p class="{% if task.completed %}line-through text-gray-500{% endif %}">{{ task.content }}</p>
+                <small class="text-gray-400">Added: {{ task.date_created.strftime('%b %d, %Y %H:%M') }}</small>
+            </div>
+            <div class="flex gap-2">
+                <a href="{{ url_for('main.toggle_task', task_id=task.id) }}"
+                   class="text-sm px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500">
+                    {% if task.completed %}Undo{% else %}Done{% endif %}
+                </a>
+                <a href="{{ url_for('main.delete_task', task_id=task.id) }}"
+                   class="text-sm px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</a>
+            </div>
+        </li>
+        {% else %}
+        <p class="text-gray-500 text-center">No tasks yet. Add one above!</p>
+        {% endfor %}
+    </ul>
+
+    <div class="mt-6 text-center">
+        <a href="{{ url_for('main.logout') }}" class="text-blue-500 underline">Logout</a>
+    </div>
+</div>
+{% endblock %}

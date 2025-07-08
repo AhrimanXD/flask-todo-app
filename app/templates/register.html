@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <div class="w-full max-w-md bg-white p-8 rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-6">Register</h1>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="mb-4">
+        {{ form.username.label(class_="block text-gray-700") }}
+        {{ form.username(class_="w-full px-3 py-2 border rounded") }}
+      </div>
+      <div class="mb-4">
+        {{ form.email.label(class_="block text-gray-700") }}
+        {{ form.email(class_="w-full px-3 py-2 border rounded") }}
+      </div>
+      <div class="mb-4">
+        {{ form.password.label(class_="block text-gray-700") }}
+        {{ form.password(class_="w-full px-3 py-2 border rounded") }}
+      </div>
+      <div class="mb-4">
+        {{ form.confirm_password.label(class_="block text-gray-700") }}
+        {{ form.confirm_password(class_="w-full px-3 py-2 border rounded") }}
+      </div>
+      <div>
+        {{ form.submit(class_="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600")}}
+      </div>
+    </form>
+    <p class="mt-4 text-sm">Already have an account? <a class="text-blue-500 underline" href="{{ url_for('main.login') }}">Login here</a></p>
+  </div>
+{% endblock %}
